@@ -1,0 +1,38 @@
+<div>
+  <div class="main-container">
+    <div
+      class="editor-container editor-container_balloon-editor editor-container_include-outline editor-container_include-annotations editor-container_include-style editor-container_include-block-toolbar"
+      #editorContainerElement
+    >
+      <div class="editor-container__editor-wrapper">
+        <div class="editor-container__sidebar">
+          <div #editorOutlineElement></div>
+        </div>
+        <div class="editor-container__editor">
+          <div #editorElement>
+            <ckeditor
+              [editor]="Editor"
+              [config]="config"
+              *ngIf="isLayoutReady"
+            />
+          </div>
+        </div>
+        <div class="editor-container__sidebar">
+          <div #editorAnnotationsElement></div>
+        </div>
+      </div>
+    </div>
+    <div class="revision-history" #editorRevisionHistoryElement>
+      <div class="revision-history__wrapper">
+        <div
+          class="revision-history__editor"
+          #editorRevisionHistoryEditorElement
+        ></div>
+        <div
+          class="revision-history__sidebar"
+          #editorRevisionHistorySidebarElement
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>

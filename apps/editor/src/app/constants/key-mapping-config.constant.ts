@@ -1,0 +1,16 @@
+export const KEY_MAPPING_CONFIG = {
+  TOOLBAR: 'toolbar',
+  PLUGINS: 'plugins',
+  ITEMS: 'items',
+  LICENSE_KEY: 'licenseKey',
+  BLOCK_TOOLBAR: 'blockToolbar',
+  EXTRA_PLUGINS: 'extraPlugins',
+  COMMENTS: 'comments',
+  MENTION: 'mention',
+  EXPORT_TO_PDF: 'exportPdf',
+  EXPORT_TO_WORD: 'exportWord',
+  IMAGE: 'image',
+  REVISION_HISTORY: 'revisionHistory',
+  TEMPLATE: 'template',
+  TABLE: 'table',
+};
