@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
-import { BalloonEditor, type EditorConfig } from 'ckeditor5';
+import { InlineEditor, type EditorConfig } from 'ckeditor5';
 import { CUSTOM_EDITOR_CONFIG } from '../../constants/custom-editor-config.constant';
 
 @Component({
@@ -23,7 +23,7 @@ import { CUSTOM_EDITOR_CONFIG } from '../../constants/custom-editor-config.const
 export class EditorComponent implements AfterViewInit {
   public isLayoutReady = false;
 
-  public Editor = BalloonEditor;
+  public Editor = InlineEditor;
 
   public config: EditorConfig = {};
 
