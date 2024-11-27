@@ -6,6 +6,6 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   selector: 'app-authoring-authoring-entry',
-  template: `Authoring Tool <router-outlet></router-outlet>`,
+  template: `<div class="m-4"><router-outlet></router-outlet></div>`,
 })
 export class RemoteEntryComponent {}
