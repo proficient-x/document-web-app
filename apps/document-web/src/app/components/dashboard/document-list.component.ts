@@ -15,48 +15,31 @@ import { DocumentListService } from './services/document-list.service';
   providers: [DocumentListService],
 })
 export class DocumentListComponent implements OnInit {
-  customers!: any;
-
-  representatives!: any;
-
-  statuses!: any[];
+  columns!: any;
+  documents!: any;
 
   loading = true;
 
   constructor(private documentListService: DocumentListService) {}
 
   ngOnInit() {
-    this.getItems();
-
-    this.representatives = [
-      { name: 'Amy Elsner', image: 'amyelsner.png' },
-      { name: 'Anna Fali', image: 'annafali.png' },
-      { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-      { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-      { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-      { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-      { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-      { name: 'Onyama Limba', image: 'onyamalimba.png' },
-      { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-      { name: 'Xuxue Feng', image: 'xuxuefeng.png' },
-    ];
-
-    this.statuses = [
-      { label: 'Unqualified', value: 'unqualified' },
-      { label: 'Qualified', value: 'qualified' },
-      { label: 'New', value: 'new' },
-      { label: 'Negotiation', value: 'negotiation' },
-      { label: 'Renewal', value: 'renewal' },
-      { label: 'Proposal', value: 'proposal' },
-    ];
+    this.getDocuments();
   }
 
-  getItems(): void {
+  getDocuments(): void {
+    this.columns = [
+      { field: 'documentId', header: 'Id', width: '11%' },
+      { field: 'documentTitle', header: 'Title', width: '33%' },
+      { field: 'documentOwner', header: 'Owner', width: '22%' },
+      { field: 'documentType', header: 'Type', width: '22%' },
+      { field: 'creationDate', header: 'Creation Date', width: '12%' },
+    ];
+
     this.documentListService
-      .getItems()
+      .getDocuments()
       .subscribe(
-        (customers: any) => (
-          (this.loading = false), (this.customers = customers)
+        (documents: any) => (
+          (this.loading = false), (this.documents = documents)
         )
       );
   }

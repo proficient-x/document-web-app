@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class DocumentListService {
-  private itemsUrl = 'api/items'; // URL to web api
+  private documentUrl = 'api/documents'; // URL to web api
 
   constructor(private http: HttpClient) {}
 
-  getItems(): Observable<any[]> {
-    return this.http.get<any[]>(this.itemsUrl);
+  getDocuments(): Observable<any[]> {
+    return this.http.get<any[]>(this.documentUrl);
   }
 }

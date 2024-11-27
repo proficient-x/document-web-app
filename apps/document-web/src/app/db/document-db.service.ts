@@ -4,115 +4,93 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class DocumentDbService implements InMemoryDbService {
-  items = [
+  documents = [
     {
-      id: 1000,
-      name: 'James Butt',
-      country: {
-        name: 'Algeria',
-        code: 'dz',
-      },
-      company: 'Benton, John B Jr',
-      date: '2015-09-13',
-      status: 'unqualified',
-      verified: true,
-      activity: 17,
-      representative: {
-        name: 'Ioni Bowcher',
-        image: 'ionibowcher.png',
-      },
-      balance: 70663,
+      documentId: 1,
+      documentTitle: 'Document 1',
+      documentOwner: 'Amit N',
+      documentType: 'Resume',
+      creationDate: '22/01/24',
     },
     {
-      id: 1001,
-      name: 'Josephine Darakjy',
-      country: {
-        name: 'Egypt',
-        code: 'eg',
-      },
-      company: 'Chanay, Jeffrey A Esq',
-      date: '2019-02-09',
-      status: 'proposal',
-      verified: true,
-      activity: 0,
-      representative: {
-        name: 'Amy Elsner',
-        image: 'amyelsner.png',
-      },
-      balance: 82429,
+      documentId: 2,
+      documentTitle: 'Document 2',
+      documentOwner: 'Ashutosh S',
+      documentType: 'Letter',
+      creationDate: '03/12/22',
     },
   ];
 
   constructor() {}
 
   createDb() {
-    return { items: this.items };
+    return { documents: this.documents };
   }
 
   // CRUD methods
 
   // GET all items
-  getAllItems(reqInfo: any): Observable<any> {
-    const items = this.items;
+  getAllDocuments(reqInfo: any): Observable<any> {
+    const documents = this.documents;
     return reqInfo.utils.createResponse$(() => ({
-      body: items,
+      body: documents,
       status: 200,
     }));
   }
 
   // GET item by id
-  getItemById(reqInfo: any): Observable<any> {
+  getDocumentById(reqInfo: any): Observable<any> {
     const id = reqInfo.id;
-    const item = this.items.find((i: any) => i.id === id);
+    const document = this.documents.find((i: any) => i.id === id);
     return reqInfo.utils.createResponse$(() => ({
-      body: item,
-      status: item ? 200 : 404,
+      body: document,
+      status: document ? 200 : 404,
     }));
   }
 
-  // POST new item
-  addNewItem(reqInfo: any): Observable<any> {
-    const newItem = reqInfo.utils.getJsonBody(reqInfo.req);
-    newItem.id = this.items.length + 1; // Generate a new id
-    this.items.push(newItem);
+  // POST new document
+  addNewDocument(reqInfo: any): Observable<any> {
+    const newDocument = reqInfo.utils.getJsonBody(reqInfo.req);
+    newDocument.id = this.documents.length + 1; // Generate a new id
+    this.documents.push(newDocument);
     return reqInfo.utils.createResponse$(() => ({
-      body: newItem,
+      body: newDocument,
       status: 201,
     }));
   }
 
-  // PUT updated item
-  updateItem(reqInfo: any): Observable<any> {
+  // PUT updated document
+  updateDocument(reqInfo: any): Observable<any> {
     const id = reqInfo.id;
-    const updatedItem = reqInfo.utils.getJsonBody(reqInfo.req);
-    const index = this.items.findIndex((i: any) => i.id === id);
+    const updatedDocument = reqInfo.utils.getJsonBody(reqInfo.req);
+    const index = this.documents.findIndex((i: any) => i.id === id);
     if (index !== -1) {
-      this.items[index] = { ...this.items[index], ...updatedItem };
+      this.documents[index] = { ...this.documents[index], ...updatedDocument };
       return reqInfo.utils.createResponse$(() => ({
-        body: this.items[index],
+        body: this.documents[index],
         status: 200,
       }));
     } else {
       return reqInfo.utils.createResponse$(() => ({
-        body: { error: 'Item not found' },
+        body: { error: 'Document not found' },
         status: 404,
       }));
     }
   }
 
-  // DELETE item
-  deleteItem(reqInfo: any): Observable<any> {
+  // DELETE document
+  deleteDocument(reqInfo: any): Observable<any> {
     const id = reqInfo.id;
-    const index = this.items.findIndex((i: any) => i.id === id);
+    const index = this.documents.findIndex((i: any) => i.id === id);
     if (index !== -1) {
-      const deletedItem = this.items.splice(index, 1)[0];
+      const deletedDocument = this.documents.splice(index, 1)[0];
       return reqInfo.utils.createResponse$(() => ({
-        body: deletedItem,
+        body: deletedDocument,
         status: 200,
       }));
     } else {
       return reqInfo.utils.createResponse$(() => ({
-        body: { error: 'Item not found' },
+        body: { error: 'Document not found' },
         status: 404,
       }));
     }
