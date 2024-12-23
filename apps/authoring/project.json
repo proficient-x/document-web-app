@@ -30,6 +30,7 @@
       },
       "configurations": {
         "production": {
+          "baseHref": "/authoring/",
           "budgets": [
             {
               "type": "initial",

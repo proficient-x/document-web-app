@@ -30,6 +30,7 @@
       },
       "configurations": {
         "production": {
+          "baseHref": "/editor/",
           "budgets": [
             {
               "type": "initial",

@@ -20,6 +20,11 @@
           {
             "glob": "**/*",
             "input": "apps/document-web/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/document-web/src/assets",
+            "output": "assets"
           }
         ],
         "styles": [
@@ -36,6 +41,7 @@
       },
       "configurations": {
         "production": {
+          "baseHref": "/document-web/",
           "budgets": [
             {
               "type": "initial",
