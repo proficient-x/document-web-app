@@ -1,14 +1,20 @@
 import { Route } from '@angular/router';
 
-import { DocumentListComponent } from './components/dashboard/document-list.component';
-
 export const appRoutes: Route[] = [
   {
-    path: 'authoring',
+    path: 'authoring/:docId',
     loadChildren: () => import('authoring/Routes').then((m) => m!.remoteRoutes),
   },
   {
+    path: 'home',
+    loadComponent: () =>
+      import('./components/dashboard/document-list.component').then(
+        (m) => m.DocumentListComponent
+      ),
+  },
+  {
     path: '',
-    component: DocumentListComponent,
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
 ];

@@ -18,8 +18,14 @@
 
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
-      <td *ngFor="let col of columns">
-        {{ rowData[col.field] }}
+      <td *ngFor="let col of columns" [ngSwitch]="col.field">
+        <a
+          *ngSwitchCase="'documentTitle'"
+          [routerLink]="['/authoring', rowData['docId']]"
+        >
+          {{ rowData[col.field] }}</a
+        >
+        <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
       </td>
     </tr>
   </ng-template>
