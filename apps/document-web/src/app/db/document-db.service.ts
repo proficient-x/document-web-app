@@ -4,34 +4,82 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class DocumentDbService implements InMemoryDbService {
-  documents = [
+  private readonly _documents = [
     {
-      documentId: 1,
-      documentTitle: 'Document 1',
+      id: 1,
+      docId: 1,
+      sectionId: '0',
+      documentTitle: 'My Resume for Angular developer position',
       documentOwner: 'Amit N',
       documentType: 'Resume',
       creationDate: '22/01/24',
+      description: '',
+      sections: [
+        {
+          docId: 1,
+          sectionId: '1',
+          parentSectionId: 0,
+          documentTitle: 'Overview',
+          documentOwner: 'Amit N',
+          documentType: 'Resume',
+          creationDate: '22/01/24',
+          description: '',
+          sections: [
+            {
+              docId: 1,
+              sectionId: '1.1',
+              parentSectionId: 1,
+              documentTitle: 'INTRODUCTION',
+              documentOwner: 'Amit N',
+              documentType: 'Resume',
+              creationDate: '22/01/24',
+              description:
+                'The objective of this document is to get a job somewhere',
+              sections: [],
+            },
+          ],
+        },
+      ],
     },
     {
-      documentId: 2,
-      documentTitle: 'Document 2',
-      documentOwner: 'Ashutosh S',
-      documentType: 'Letter',
-      creationDate: '03/12/22',
+      id: 2,
+      docId: 2,
+      sectionId: '0',
+      documentTitle: 'HR policy of hiring people.',
+      documentOwner: 'Srini P',
+      documentType: 'Proc',
+      creationDate: '2/12/24',
+      description: '',
+      sections: [
+        {
+          id: 2,
+          docId: 2,
+          sectionId: '1.1',
+          parentSectionId: 1,
+          documentTitle: 'Introduction',
+          documentOwner: 'Srini P',
+          documentType: 'Proc',
+          creationDate: '2/12/24',
+          description: '',
+          sections: [],
+        },
+      ],
     },
   ];
 
-  constructor() {}
+  constructor() {
+    //
+  }
 
   createDb() {
-    return { documents: this.documents };
+    return { documents: this._documents };
   }
 
   // CRUD methods
 
   // GET all items
   getAllDocuments(reqInfo: any): Observable<any> {
-    const documents = this.documents;
+    const documents = this._documents;
     return reqInfo.utils.createResponse$(() => ({
       body: documents,
       status: 200,
@@ -40,8 +88,9 @@ export class DocumentDbService implements InMemoryDbService {
 
   // GET item by id
   getDocumentById(reqInfo: any): Observable<any> {
-    const id = reqInfo.id;
-    const document = this.documents.find((i: any) => i.id === id);
+    const id = parseInt(reqInfo.id, 10);
+
+    const document = this._documents.find((i: any) => i.id === id);
     return reqInfo.utils.createResponse$(() => ({
       body: document,
       status: document ? 200 : 404,
@@ -51,8 +100,8 @@ export class DocumentDbService implements InMemoryDbService {
   // POST new document
   addNewDocument(reqInfo: any): Observable<any> {
     const newDocument = reqInfo.utils.getJsonBody(reqInfo.req);
-    newDocument.id = this.documents.length + 1; // Generate a new id
-    this.documents.push(newDocument);
+    newDocument.id = this._documents.length + 1; // Generate a new id
+    this._documents.push(newDocument);
     return reqInfo.utils.createResponse$(() => ({
       body: newDocument,
       status: 201,
@@ -63,11 +112,14 @@ export class DocumentDbService implements InMemoryDbService {
   updateDocument(reqInfo: any): Observable<any> {
     const id = reqInfo.id;
     const updatedDocument = reqInfo.utils.getJsonBody(reqInfo.req);
-    const index = this.documents.findIndex((i: any) => i.id === id);
+    const index = this._documents.findIndex((i: any) => i.id === id);
     if (index !== -1) {
-      this.documents[index] = { ...this.documents[index], ...updatedDocument };
+      this._documents[index] = {
+        ...this._documents[index],
+        ...updatedDocument,
+      };
       return reqInfo.utils.createResponse$(() => ({
-        body: this.documents[index],
+        body: this._documents[index],
         status: 200,
       }));
     } else {
@@ -81,9 +133,9 @@ export class DocumentDbService implements InMemoryDbService {
   // DELETE document
   deleteDocument(reqInfo: any): Observable<any> {
     const id = reqInfo.id;
-    const index = this.documents.findIndex((i: any) => i.id === id);
+    const index = this._documents.findIndex((i: any) => i.id === id);
     if (index !== -1) {
-      const deletedDocument = this.documents.splice(index, 1)[0];
+      const deletedDocument = this._documents.splice(index, 1)[0];
       return reqInfo.utils.createResponse$(() => ({
         body: deletedDocument,
         status: 200,
