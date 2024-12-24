@@ -19,7 +19,7 @@ export default withModuleFederation(
      *   ['app2', 'https://app2.example.com'],
      * ]
      */
-    remotes: [['authoring', 'http://localhost:8080/authoring/remoteEntry.mjs']],
+    // remotes: [['authoring', 'http://localhost:8080/authoring/remoteEntry.mjs']],
   },
   { dts: false }
 );

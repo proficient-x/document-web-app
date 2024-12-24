@@ -19,7 +19,7 @@ export default withModuleFederation(
      *   ['app2', 'https://app2.example.com'],
      * ]
      */
-    remotes: [['editor', 'http://localhost:8080/editor/remoteEntry.mjs']],
+    // remotes: [['editor', 'http://localhost:8080/editor/remoteEntry.mjs']],
   },
   { dts: false }
 );
