@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  authoring: 'http://localhost:4201/',
+  editor: 'http://localhost:4202/',
 };

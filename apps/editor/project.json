@@ -46,7 +46,13 @@
           "outputHashing": "all",
           "customWebpackConfig": {
             "path": "apps/editor/webpack.prod.config.ts"
-          }
+          },
+          "fileReplacements": [
+            {
+              "replace": "apps/editor/src/environments/environment.ts",
+              "with": "apps/editor/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,
