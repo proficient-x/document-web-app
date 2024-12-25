@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Input,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +28,8 @@ export class EditorComponent implements AfterViewInit {
 
   public config: EditorConfig = {};
 
+  @Input() content = '';
+
   @ViewChild('editorOutlineElement')
   private editorOutline!: ElementRef<HTMLDivElement>;
   @ViewChild('editorAnnotationsElement')
@@ -45,6 +48,7 @@ export class EditorComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.config = {
       ...CUSTOM_EDITOR_CONFIG,
+      initialData: this.content,
       documentOutline: {
         container: this.editorOutline.nativeElement,
       },
@@ -59,8 +63,6 @@ export class EditorComponent implements AfterViewInit {
         container: this.editorAnnotations.nativeElement,
       },
     };
-    console.log(this.config);
-    console.log();
 
     this.isLayoutReady = true;
     this.changeDetector.detectChanges();

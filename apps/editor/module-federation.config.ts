@@ -4,6 +4,7 @@ const config: ModuleFederationConfig = {
   name: 'editor',
   exposes: {
     './Routes': 'apps/editor/src/app/remote-entry/entry.routes.ts',
+    './CkEditor': 'apps/editor/src/app/components/editor/editor.component.ts',
   },
 };
 

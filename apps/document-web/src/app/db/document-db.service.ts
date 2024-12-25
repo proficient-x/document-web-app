@@ -13,7 +13,7 @@ export class DocumentDbService implements InMemoryDbService {
       documentOwner: 'Amit N',
       documentType: 'Resume',
       creationDate: '22/01/24',
-      description: '',
+      description: 'Section Root',
       sections: [
         {
           docId: 1,
@@ -23,7 +23,7 @@ export class DocumentDbService implements InMemoryDbService {
           documentOwner: 'Amit N',
           documentType: 'Resume',
           creationDate: '22/01/24',
-          description: '',
+          description: 'Section 1',
           sections: [
             {
               docId: 1,
@@ -34,7 +34,43 @@ export class DocumentDbService implements InMemoryDbService {
               documentType: 'Resume',
               creationDate: '22/01/24',
               description:
-                'The objective of this document is to get a job somewhere',
+                'Section 1.1 The objective of this document is to get a job somewhere',
+              sections: [],
+            },
+          ],
+        },
+        {
+          docId: 1,
+          sectionId: '2',
+          parentSectionId: 0,
+          documentTitle: 'Objective',
+          documentOwner: 'Amit N',
+          documentType: 'CV',
+          creationDate: '22/01/24',
+          description: 'Section 2',
+          sections: [
+            {
+              docId: 1,
+              sectionId: '2.1',
+              parentSectionId: 1,
+              documentTitle: 'Random Introduction',
+              documentOwner: 'Amit N',
+              documentType: 'Resume',
+              creationDate: '22/01/24',
+              description:
+                'Section 2.1 The objective of this document is to get a job somewhere',
+              sections: [],
+            },
+            {
+              docId: 1,
+              sectionId: '2.2',
+              parentSectionId: 1,
+              documentTitle: 'Official INTRODUCTION',
+              documentOwner: 'Amit N',
+              documentType: 'Resume',
+              creationDate: '22/01/24',
+              description:
+                'Section 2.2 The objective of this document is to get a job somewhere',
               sections: [],
             },
           ],

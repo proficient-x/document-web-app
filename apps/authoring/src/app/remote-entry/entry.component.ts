@@ -1,6 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { loadRemoteModule, setRemoteDefinitions } from '@nx/angular/mf';
+
+import { environment } from '../../environments/environment';
 
 import { DocumentOutlineComponent } from '../components/document-outline/document-outline.component';
 
@@ -16,21 +28,35 @@ import { DocumentDetailsService } from '../services/document-details.service';
         [documentDetails]="documentDetails"
       ></app-authoring-document-outline>
     </div>
-    <div class="col-md-9"><router-outlet></router-outlet></div>
+    <div class="col-md-9">
+      <!-- <router-outlet></router-outlet> -->
+      <ng-template #ckEditorContainer></ng-template>
+    </div>
   </div>`,
   styles: ['::ng-deep .p-tree-wrapper ul {padding-left:0rem;}'],
   providers: [DocumentDetailsService],
 })
-export class RemoteEntryComponent implements OnInit {
+export class RemoteEntryComponent implements OnInit, AfterViewInit {
   documentDetails: any;
 
   // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('docId') private readonly _docId?: string;
 
-  constructor(private _documentDetailsService: DocumentDetailsService) {}
+  @ViewChild('ckEditorContainer', { read: ViewContainerRef })
+  ckEditorContainer!: ViewContainerRef;
 
-  ngOnInit() {
+  constructor(
+    private _resolver: ComponentFactoryResolver,
+    private _documentDetailsService: DocumentDetailsService
+  ) {}
+
+  ngOnInit(): void {
     if (this._docId) this._getDocumentDetails(+this._docId);
+  }
+
+  ngAfterViewInit(): void {
+    // Comment out this line once data fetching is implemented
+    // this._loadEditor();
   }
 
   private _getDocumentDetails(docId: number) {
@@ -39,6 +65,29 @@ export class RemoteEntryComponent implements OnInit {
       .subscribe((documentDetails: any) => {
         console.log(documentDetails);
         this.documentDetails = documentDetails;
+        this._showEditor([this.documentDetails]);
       });
+  }
+
+  private async _loadEditor(content = '') {
+    setRemoteDefinitions({ editor: environment.editor });
+    const { EditorComponent } = await loadRemoteModule('editor', './CkEditor');
+
+    // Uncomment this line to clear the container before loading the editor
+    // this.ckEditorContainer.clear();
+    const factory = this._resolver.resolveComponentFactory(EditorComponent);
+    const componentRef: ComponentRef<typeof EditorComponent> =
+      this.ckEditorContainer.createComponent(factory);
+
+    componentRef.instance.content = content;
+  }
+
+  private _showEditor(section: any) {
+    section.map((section: any) => {
+      this._loadEditor(section.description);
+      if (section.sections.length > 0) {
+        this._showEditor(section.sections);
+      }
+    });
   }
 }
