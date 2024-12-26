@@ -13,14 +13,14 @@ import {
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { DocumentDbService } from './db/document-db.service';
-import { appRoutes } from './app.routes';
+import { appRoutesFactory } from './app-routes.factory';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(appRoutes, withComponentInputBinding()),
+    provideRouter(appRoutesFactory(), withComponentInputBinding()),
     importProvidersFrom(
       InMemoryWebApiModule.forRoot(DocumentDbService, { delay: 1000 })
     ),

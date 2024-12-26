@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 import { loadRemoteModule, setRemoteDefinitions } from '@nx/angular/mf';
 import { environment } from '../environments/environment';
 
-export const appRoutes: Route[] = [
+const appRoutes: Route[] = [
   {
     path: 'authoring/:docId',
     // loadChildren: () => import('authoring/Routes').then((m) => m!.remoteRoutes),
@@ -26,3 +26,5 @@ export const appRoutes: Route[] = [
     pathMatch: 'full',
   },
 ];
+
+export const appRoutesFactory = () => appRoutes;
