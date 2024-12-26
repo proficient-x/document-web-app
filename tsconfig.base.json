@@ -15,10 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "authoring/Routes": [
-        "apps/authoring/src/app/remote-entry/entry.routes.ts"
-      ],
-      "editor/Routes": ["apps/editor/src/app/remote-entry/entry.routes.ts"]
+      "@pwa/core": ["libs/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
