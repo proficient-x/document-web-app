@@ -13,7 +13,7 @@ export class DocumentDbService implements InMemoryDbService {
       documentOwner: 'Amit N',
       documentType: 'Resume',
       creationDate: '22/01/24',
-      description: 'Section Root',
+      description: '<h1>Section Root</h1>',
       sections: [
         {
           docId: 1,

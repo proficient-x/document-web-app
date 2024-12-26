@@ -82,12 +82,12 @@ export class RemoteEntryComponent implements OnInit, AfterViewInit {
     componentRef.instance.content = content;
   }
 
-  private _showEditor(section: any) {
-    section.map((section: any) => {
-      this._loadEditor(section.description);
-      if (section.sections.length > 0) {
-        this._showEditor(section.sections);
+  private async _showEditor(section: any) {
+    for (const sec of section) {
+      await this._loadEditor(sec.description);
+      if (sec.sections.length > 0) {
+        await this._showEditor(sec.sections);
       }
-    });
+    }
   }
 }
