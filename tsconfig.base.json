@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pwa/core": ["libs/core/src/index.ts"]
+      "@dwa/core": ["libs/core/src/index.ts"],
+      "@dwa/core/load-mfe": ["libs/core/load-mfe/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

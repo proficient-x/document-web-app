@@ -1,18 +1,10 @@
-import { Route } from '@angular/router';
-import { loadRemoteModule, setRemoteDefinitions } from '@nx/angular/mf';
+import { Route, Router } from '@angular/router';
+
+import { LoadMfeUtils, MfeConfig } from '@dwa/core/load-mfe';
+
 import { environment } from '../environments/environment';
 
-const appRoutes: Route[] = [
-  {
-    path: 'authoring/:docId',
-    // loadChildren: () => import('authoring/Routes').then((m) => m!.remoteRoutes),
-    loadChildren: () => {
-      setRemoteDefinitions({ authoring: environment.authoring });
-      return loadRemoteModule('authoring', './Routes').then(
-        (m) => m.remoteRoutes
-      );
-    },
-  },
+export const appRoutes: Route[] = [
   {
     path: 'home',
     loadComponent: () =>
@@ -25,6 +17,27 @@ const appRoutes: Route[] = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: '**',
+    redirectTo: 'home',
+  },
 ];
 
-export const appRoutesFactory = () => appRoutes;
+const remoteRoutes: MfeConfig[] = [
+  {
+    remotePath: 'authoring/:docId',
+    remoteEntryUrl: environment.authoring,
+    remoteName: 'authoring',
+    exposes: './Routes',
+    ngTypeName: 'remoteRoutes',
+  },
+];
+
+export const dynamicRoutesFactory = (router: Router) => () =>
+  new Promise((resolver: any) => {
+    router.resetConfig([
+      ...LoadMfeUtils.getAllRemoteRoutes(remoteRoutes),
+      ...appRoutes,
+    ]);
+    resolver();
+  });
