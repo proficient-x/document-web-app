@@ -14,11 +14,11 @@ import {
   IMfeConfig,
   IRemoteMfeComponent,
 } from '../interface/mfe-config.interface';
-import { SubSink } from '@dwa/core';
+import { Subscription } from 'rxjs';
 
 @Injectable()
 export class LoadMfeUtils implements OnDestroy {
-  private static _subs = new SubSink();
+  private static _subscription: Subscription = new Subscription();
 
   public static getAllRemoteRoutes(mfeConfigs: IMfeConfig[]) {
     return mfeConfigs.map((mfeConfig) => this._loadRemote(mfeConfig));
@@ -46,6 +46,8 @@ export class LoadMfeUtils implements OnDestroy {
     viewContainerRef: ViewContainerRef,
     isClearContainer = true
   ) {
+    console.log('loadRemoteComponent', loadMfeConfig);
+
     setRemoteDefinitions({
       [loadMfeConfig.mfe.remoteName]: loadMfeConfig.mfe.remoteEntryUrl,
     });
@@ -119,7 +121,7 @@ export class LoadMfeUtils implements OnDestroy {
     key: string
   ) {
     if (remoteComponent.instance && remoteComponent.instance[key]) {
-      this._subs.sink = (
+      this._subscription = (
         remoteComponent.instance[key] as EventEmitter<unknown>
       ).subscribe(loadMfeConfig.component.outputs[key]);
     } else {
@@ -130,6 +132,6 @@ export class LoadMfeUtils implements OnDestroy {
   }
 
   ngOnDestroy() {
-    LoadMfeUtils._subs.unsubscribe();
+    LoadMfeUtils._subscription.unsubscribe();
   }
 }

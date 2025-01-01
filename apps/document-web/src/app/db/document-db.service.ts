@@ -13,7 +13,8 @@ export class DocumentDbService implements InMemoryDbService {
       documentOwner: 'Amit N',
       documentType: 'Resume',
       creationDate: '22/01/24',
-      description: '<h1>Section Root</h1>',
+      description: '<h1>My Resume for Angular developer position</h1>',
+      level: 1,
       sections: [
         {
           docId: 1,
@@ -24,6 +25,7 @@ export class DocumentDbService implements InMemoryDbService {
           documentType: 'Resume',
           creationDate: '22/01/24',
           description: 'Section 1',
+          level: 2,
           sections: [
             {
               docId: 1,
@@ -36,6 +38,7 @@ export class DocumentDbService implements InMemoryDbService {
               description:
                 'Section 1.1 The objective of this document is to get a job somewhere',
               sections: [],
+              level: 3,
             },
           ],
         },
@@ -85,7 +88,8 @@ export class DocumentDbService implements InMemoryDbService {
       documentOwner: 'Srini P',
       documentType: 'Proc',
       creationDate: '2/12/24',
-      description: '',
+      description: 'HR policy of hiring people.',
+      level: 1,
       sections: [
         {
           id: 2,
@@ -96,8 +100,9 @@ export class DocumentDbService implements InMemoryDbService {
           documentOwner: 'Srini P',
           documentType: 'Proc',
           creationDate: '2/12/24',
-          description: '',
+          description: 'Introduction',
           sections: [],
+          level: 2,
         },
       ],
     },

@@ -2,7 +2,7 @@ import { Route, Router } from '@angular/router';
 
 import { LoadMfeUtils, IMfeConfig } from '@dwa/core/load-mfe';
 
-import { environment } from '../environments/environment';
+import { getRemoteUrl, ROUTE_CONFIG } from '@dwa/core';
 
 export const appRoutes: Route[] = [
   {
@@ -26,7 +26,7 @@ export const appRoutes: Route[] = [
 const remoteRoutes: IMfeConfig[] = [
   {
     remotePath: 'authoring/:docId',
-    remoteEntryUrl: environment.authoring,
+    remoteEntryUrl: getRemoteUrl(ROUTE_CONFIG.AUTHORING),
     remoteName: 'authoring',
     exposes: './Routes',
     ngTypeName: 'remoteRoutes',
