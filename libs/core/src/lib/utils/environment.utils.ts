@@ -6,7 +6,7 @@ const portMapping = new Map<string, number>([
 ]);
 
 export const isAppRunningInLocal = () =>
-  window.location.href.includes('localhost');
+  window.location.href.includes('localhost:4200');
 
 export const getRemoteUrl = (path: string) =>
   isAppRunningInLocal()
