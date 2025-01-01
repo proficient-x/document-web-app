@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   ComponentFactoryResolver,
-  ComponentRef,
   Input,
   OnInit,
   ViewChild,
@@ -10,7 +9,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { loadRemoteModule, setRemoteDefinitions } from '@nx/angular/mf';
+
+import { LoadMfeUtils, ILoadMfeConfig } from '@dwa/core/load-mfe';
 
 import { environment } from '../../environments/environment';
 
@@ -70,16 +70,49 @@ export class RemoteEntryComponent implements OnInit, AfterViewInit {
   }
 
   private async _loadEditor(content = '') {
-    setRemoteDefinitions({ editor: environment.editor });
-    const { EditorComponent } = await loadRemoteModule('editor', './CkEditor');
+    const remoteRoutes: ILoadMfeConfig = {
+      mfe: {
+        remotePath: '',
+        remoteEntryUrl: environment.editor,
+        remoteName: 'editor',
+        exposes: './CkEditor',
+        ngTypeName: 'EditorComponent',
+      },
+      component: {
+        inputs: { content },
+        outputs: {},
+      },
+    };
 
-    // Uncomment this line to clear the container before loading the editor
-    // this.ckEditorContainer.clear();
-    const factory = this._resolver.resolveComponentFactory(EditorComponent);
-    const componentRef: ComponentRef<typeof EditorComponent> =
-      this.ckEditorContainer.createComponent(factory);
+    await LoadMfeUtils.loadRemoteComponent(
+      remoteRoutes,
+      this.ckEditorContainer,
+      false
+    );
 
-    componentRef.instance.content = content;
+    /**** Old logic to load component
+      setRemoteDefinitions({ editor: environment.editor });
+      const { EditorComponent } = await loadRemoteModule('editor', './CkEditor');
+
+      // Uncomment this line to clear the container before loading the editor
+      // this.ckEditorContainer.clear();
+      const factory = this._resolver.resolveComponentFactory(EditorComponent);
+      const componentRef: ComponentRef<typeof EditorComponent> =
+        this.ckEditorContainer.createComponent(factory);
+    */
+
+    /*** Another way to set input property of remote component.
+      const remoteComponent: ComponentRef<IRemoteMfeComponent> | null =
+        await LoadMfeUtils.loadRemoteComponent(
+          remoteRoutes,
+          this.ckEditorContainer,
+          false
+        );
+
+      if (remoteComponent) {
+      remoteComponent.instance['content'] = content;
+      }
+     */
   }
 
   private async _showEditor(section: any) {

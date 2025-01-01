@@ -1,1 +1,1 @@
-export * from './lib/core/core.component';
+export * from './lib/core/utils/sub-sink.class';
