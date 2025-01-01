@@ -4,12 +4,14 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CKEditorModule, FocusEvent } from '@ckeditor/ckeditor5-angular';
 
 import { InlineEditor, type EditorConfig } from 'ckeditor5';
 import { CUSTOM_EDITOR_CONFIG } from '../../constants/custom-editor-config.constant';
@@ -29,6 +31,8 @@ export class EditorComponent implements AfterViewInit {
   public config: EditorConfig = {};
 
   @Input() content = '';
+
+  @Output() private _focusEditor: EventEmitter<FocusEvent> = new EventEmitter();
 
   @ViewChild('editorOutlineElement')
   private editorOutline!: ElementRef<HTMLDivElement>;
@@ -66,5 +70,9 @@ export class EditorComponent implements AfterViewInit {
 
     this.isLayoutReady = true;
     this.changeDetector.detectChanges();
+  }
+
+  public onFocus(event: FocusEvent): void {
+    this._focusEditor.emit(event);
   }
 }

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { OnHoverDirective, RichTextEditorComponent } from '@dwa/core';
+import { RichTextEditorComponent } from '@dwa/core';
 
 import { DocumentOutlineComponent } from '../components/document-outline/document-outline.component';
 
@@ -13,7 +13,6 @@ import { DocumentDetailsService } from '../services/document-details.service';
   imports: [
     CommonModule,
     RouterModule,
-    OnHoverDirective,
     DocumentOutlineComponent,
     RichTextEditorComponent,
   ],
@@ -37,7 +36,6 @@ import { DocumentDetailsService } from '../services/document-details.service';
 
       <ng-template #sectionTemplate let-section>
         <div
-          libOnHover
           [style]="{
             'margin-left': getLeftMargin(section.level),
           }"

@@ -11,9 +11,10 @@
         <div class="editor-container__editor">
           <div #editorElement>
             <ckeditor
+              *ngIf="isLayoutReady"
               [editor]="Editor"
               [config]="config"
-              *ngIf="isLayoutReady"
+              (focus)="onFocus($event)"
             />
           </div>
         </div>

@@ -1,26 +1,33 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
+  Output,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FocusEvent } from '@ckeditor/ckeditor5-angular';
+
 import { ILoadMfeConfig, LoadMfeUtils } from '@dwa/core/load-mfe';
 
 import { getRemoteUrl } from '../utils/environment.utils';
 import { ROUTE_CONFIG } from '../constants/route-config.constants';
+import { OnHoverDirective } from '../directives/on-hover.directive';
 
 @Component({
   selector: 'lib-rich-text-editor',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, OnHoverDirective],
   templateUrl: './rich-text-editor.component.html',
   styleUrl: './rich-text-editor.component.scss',
 })
 export class RichTextEditorComponent implements AfterViewInit {
   @Input() data: any;
+
+  @Output() focusEditor: EventEmitter<FocusEvent> = new EventEmitter();
 
   @ViewChild('ckEditorContainer', { read: ViewContainerRef })
   ckEditorContainer!: ViewContainerRef;
@@ -40,7 +47,9 @@ export class RichTextEditorComponent implements AfterViewInit {
       },
       component: {
         inputs: { content },
-        outputs: {},
+        outputs: {
+          _focusEditor: this.focusEditor,
+        },
       },
     };
 

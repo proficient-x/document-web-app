@@ -5,7 +5,7 @@ interface IInput {
 }
 
 interface IOutput {
-  [key: string]: EventEmitter<unknown>;
+  [key: string]: EventEmitter<any>;
 }
 
 export interface IMfeConfig {
