@@ -1,0 +1,10 @@
+{
+  "workbench.iconTheme": "vscode-icons",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "workbench.startupEditor": "none",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "nxConsole.showNodeVersionOnStartup": false,
+  "workbench.editor.enablePreview": false,
+  "typescript.preferences.includePackageJsonAutoImports": "on"
+}
