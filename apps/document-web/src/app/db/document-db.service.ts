@@ -51,6 +51,7 @@ export class DocumentDbService implements InMemoryDbService {
           documentType: 'CV',
           creationDate: '22/01/24',
           description: 'Section 2',
+          level: 2,
           sections: [
             {
               docId: 1,
@@ -63,6 +64,7 @@ export class DocumentDbService implements InMemoryDbService {
               description:
                 'Section 2.1 The objective of this document is to get a job somewhere',
               sections: [],
+              level: 3,
             },
             {
               docId: 1,
@@ -75,6 +77,7 @@ export class DocumentDbService implements InMemoryDbService {
               description:
                 'Section 2.2 The objective of this document is to get a job somewhere',
               sections: [],
+              level: 3,
             },
           ],
         },

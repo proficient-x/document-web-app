@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { RichTextEditorComponent } from '@dwa/core';
+import { OnHoverDirective, RichTextEditorComponent } from '@dwa/core';
 
 import { DocumentOutlineComponent } from '../components/document-outline/document-outline.component';
 
@@ -13,6 +13,7 @@ import { DocumentDetailsService } from '../services/document-details.service';
   imports: [
     CommonModule,
     RouterModule,
+    OnHoverDirective,
     DocumentOutlineComponent,
     RichTextEditorComponent,
   ],
@@ -35,7 +36,14 @@ import { DocumentDetailsService } from '../services/document-details.service';
       }
 
       <ng-template #sectionTemplate let-section>
-        <lib-rich-text-editor [data]="section"></lib-rich-text-editor>
+        <div
+          libOnHover
+          [style]="{
+            'margin-left': getLeftMargin(section.level),
+          }"
+        >
+          <lib-rich-text-editor [data]="section"></lib-rich-text-editor>
+        </div>
 
         @for (subSection of section.sections; track $index) {
         <ng-container
@@ -71,5 +79,9 @@ export class RemoteEntryComponent implements OnInit {
         console.log(documentDetails);
         this.documentDetails = documentDetails;
       });
+  }
+
+  public getLeftMargin(level: number): string {
+    return level > 1 ? level * 10 + 'px' : '0px';
   }
 }
