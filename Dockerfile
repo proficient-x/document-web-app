@@ -28,6 +28,3 @@ ARG APP_NAME
 
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /usr/local/app/dist/apps/$APP_NAME /usr/share/nginx/html/$APP_NAME
-
-# Expose port 8080
-EXPOSE 8080
